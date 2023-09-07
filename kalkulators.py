@@ -16,7 +16,6 @@ def kont_add():
             continue
 kont_add()
 
-answer = int(input("izvelies darbibu: \n1.saskaitīt \n2.atņemt \n3.reizināt \n4.dalīt \n5.iziet un saglabāt \n"))
 while answer != 5:
     answer = int(input("izvelies darbibu: \n1.saskaitīt \n2.atņemt \n3.reizināt \n4.dalīt \n5.iziet un saglabāt \n"))
     pirmais = int(input("ievadi pirmo skaitli "))
