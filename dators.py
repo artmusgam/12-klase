@@ -29,8 +29,8 @@ class datora_sastavdala():
 
 dators = datora_sastavdala(veids='RAM',modelis= 'Corsair Vengeance LPX 16GB',cena= '99,99 EUR')
 dators.izdrukat()
-dators.labosana(veids= input("ievadi veidu: "), modelis= input("ievadi modeli: "), cena= input("ievadi cenu: "))
-dators.izdrukat()
+#dators.labosana(veids= input("ievadi veidu: "), modelis= input("ievadi modeli: "), cena= input("ievadi cenu: "))
+#dators.izdrukat()
 
 #datu saglabašana
 
@@ -39,14 +39,50 @@ dators.saglabat()
 import PySimpleGUI as psg
 
 psg.theme('DarkAmber')
-layout = [[psg.Text('Komponents')]]
+logs = [
+        [psg.Text('Komponents')],
+        [psg.Text('Veids'),psg.InputText()],
+        [psg.Text('Modelis'),psg.InputText()],
+        [psg.Text('Cena'),psg.InputText()],
+        [psg.Button('Saglabāt')]
+]
+logs2 = [
+    [psg.Text("Rediģēšana")],
+    [psg.Text('Veids'),psg.InputText()],
+    [psg.Text('Modelis'),psg.InputText()],
+    [psg.Text('Cena'),psg.InputText()],
+    [psg.Button('Rediģēt')]    
+    
+]
 
-layout2 = [[psg.Text('Rediģēšana')]]
-
-tabgrp = [
+logugrupa = [[
     psg.TabGroup(
         [
-            
+         [
+            psg.Tab('Datu ievade',logs),
+            psg.Tab('Datu rediģēšana',logs2)
+         ]   
         ]
-    )
-]
+    ),
+    psg.Button('Aizvērt')
+]]
+window = psg.Window('Datora komponentes', logugrupa)
+while True:
+    event,values = window.read()
+    if event == "Saglabāt":
+        veids =  values[0]
+        modelis = values[1]
+        cena = values[2]
+        dators = datora_sastavdala(veids,modelis,cena)
+        dators.saglabat()
+    if event == "Rediģēt":
+        veids = values[3]
+        modelis = values[4]
+        cena = values[5]
+        dators.labosana(veids,modelis,cena)
+        dators.saglabat()
+    if event in (psg.WIN_CLOSED, 'Aizvērt'):
+        break
+    
+
+window.close()
