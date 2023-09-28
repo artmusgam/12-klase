@@ -1,3 +1,6 @@
+#importējam bibliotēku
+import PySimpleGUI as psg
+
 #veidota klasē
 class Slimnica():
     #veidots konstruktors
@@ -57,3 +60,40 @@ Dati.Pacients_saglabat()
 Dati.Dakteris_saglabat()
 Dati.Pacients_info()
 Dati.Dakteris_info()
+
+psg.theme('DarkGreen3')
+logs = [
+        [psg.Text('Pacients')],
+        [psg.Text('Vārds'),psg.InputText()],
+        [psg.Text('Uzvārds'),psg.InputText()],
+        [psg.Text('Personas kods'),psg.InputText()],
+        [psg.Text('Telefona numurs'),psg.InputText()],
+        [psg.Text('Nozare')],
+        [psg.Button('Saglabāt pacienta datus')],
+        [psg.Button('Pacienta datu apskate')]
+]
+logs2 = [
+    [psg.Text("Dakteris")],
+    [psg.Text('Vārds'),psg.InputText()],
+    [psg.Text('Uzvārds'),psg.InputText()],
+    [psg.Text('Telefona numurs'),psg.InputText()],
+    [psg.Text('Nozare'),psg.InputText()],
+    [psg.Button('Saglabāt daktera datus')],
+    [psg.Button('Daktera datu apskate')]    
+    
+]
+
+logugrupa = [[
+    psg.TabGroup(
+        [
+         [
+            psg.Tab('Pacients',logs),
+            psg.Tab('Dakteris',logs2)
+         ]   
+        ]
+    ),
+    psg.Button('Aizvērt')
+]]
+window = psg.Window('Slimnīca', logugrupa)
+while True:
+    event,values = window.read()
