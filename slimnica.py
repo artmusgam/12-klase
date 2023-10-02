@@ -68,7 +68,7 @@ logs = [
         [psg.Text('Uzvārds'),psg.InputText()],
         [psg.Text('Personas kods'),psg.InputText()],
         [psg.Text('Telefona numurs'),psg.InputText()],
-        [psg.Text('Nozare')],
+        [psg.Text('Nozare'),psg.InputText()],
         [psg.Button('Saglabāt pacienta datus')],
         [psg.Button('Pacienta datu apskate')]
 ]
@@ -97,3 +97,54 @@ logugrupa = [[
 window = psg.Window('Slimnīca', logugrupa)
 while True:
     event,values = window.read()
+    if event == "Saglabāt pacienta datus":
+        Pacients_vards = values [0]
+        Pacients_uzvards = values [1]
+        Pacients_pk = values [2]
+        Pacients_tel_numurs = values [3]
+        Pacients_nozare = values[4]
+        Dati = Slimnica(Pacients_vards,Pacients_uzvards,Pacients_pk,Pacients_tel_numurs,Pacients_nozare,Dakteris_vards="",Dakteris_uzvards="",Dakteris_tel_numurs="",Dakteris_nozare="")
+        Dati.Pacients_saglabat()
+    if event == "Saglabāt daktera datus":
+        Pacients_vards = values [4]
+        Pacients_uzvards = values [5]
+        Pacients_pk = values [6]
+        Pacients_tel_numurs = values [7]
+        Pacients_nozare = values[8]
+        Dakteris_vards = values [0]
+        Dakteris_uzvards = values [1]
+        Dakteris_tel_numurs = values [2]
+        Dakteris_nozare = values [3]
+        Dati = Slimnica(Dakteris_vards,Dakteris_uzvards,Dakteris_tel_numurs,Dakteris_nozare,Pacients_vards,Pacients_uzvards,Pacients_pk,Pacients_tel_numurs,Pacients_nozare)
+        Dati.Dakteris_saglabat()
+    if event == "Pacienta datu apskate":
+        psg.theme("DarkGreen4")
+        layout = [
+                  [psg.Text("Pacients")],
+                  [psg.Text("Vārds: " + Dati.Pacients_vards)],
+                  [psg.Text("Uzvārds: " + Dati.Pacients_uzvards)],
+                  [psg.Text("Personalais kods: " + Dati.Pacients_pk)],
+                  [psg.Text("Telefona numurs: " + Dati.Pacients_tel_numurs)],
+                  [psg.Text("Nozare: " + Dati.Pacients_nozare)],
+                  [psg.Button("Iziet")]
+                  ]
+        window2 = psg.Window('',layout)
+        event,values = window2.read()
+        if event == "Iziet":
+            break 
+    if event == "Daktera datu apskate":
+        psg.theme("DarkGreen4")
+        layout = [
+                  [psg.Text("Dakteris")],
+                  [psg.Text("Vārds: " + Dati.Dakteris_vards)],
+                  [psg.Text("Uzvārds: " + Dati.Dakteris_uzvards)],
+                  [psg.Text("Telefona numurs: " + Dati.Dakteris_tel_numurs)],
+                  [psg.Text("Nozare: " + Dati.Dakteris_nozare)],
+                  [psg.Button("Iziet")]
+                  ]
+        window2 = psg.Window('',layout)
+        event,values = window2.read()
+        if event == "Iziet":
+            break
+    if event in (psg.WIN_CLOSED,'Aizvērt'):
+        break
