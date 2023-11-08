@@ -1,5 +1,12 @@
 #importējam bibliotēku
 import PySimpleGUI as psg
+import mysql.connector
+from cryptography.fernet import Fernet
+
+db = mysql.connector.connect(host= "localhost", database = "slimnica", user = "root", password = "admin")
+print(db)
+cursor = db.cursor()
+
 
 #veidota klasē
 class Slimnica():
@@ -54,6 +61,15 @@ class Slimnica():
             fails.write(str(Dati.Dakteris_tel_numurs))
             fails.write(" \n")
             fails.write(str(Dati.Dakteris_nozare))
+            sql = ("""
+            insert into dakteris (idDakteris, dakteris_vards, dakteris_uzvards, dakteris_Tel)
+            values (%s,%s,%s,%s);
+                    """)
+            
+            data = (1,Dati.Dakteris_vards,Dati.Dakteris_uzvards,Dati.Dakteris_tel_numurs)
+            cursor.execute(sql,data)
+            db.commit()
+            db.close()
 
 Dati = Slimnica(Pacients_vards="a",Pacients_uzvards="b",Pacients_pk="c",Pacients_tel_numurs="d",Pacients_nozare="e",Dakteris_vards="f",Dakteris_uzvards="g",Dakteris_tel_numurs="h",Dakteris_nozare="i")
 Dati.Pacients_saglabat()
