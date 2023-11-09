@@ -7,6 +7,9 @@ db = mysql.connector.connect(host= "localhost", database = "slimnica", user = "r
 print(db)
 cursor = db.cursor()
 
+karta_1 = 1
+karta_2 = 2
+
 
 #veidota klasē
 class Slimnica():
@@ -21,6 +24,10 @@ class Slimnica():
             self.Dakteris_uzvards = Dakteris_uzvards
             self.Dakteris_tel_numurs = Dakteris_tel_numurs
             self.Dakteris_nozare = Dakteris_nozare
+            self.db = mysql.connector.connect(host= "localhost", database = "slimnica", user = "root", password = "admin")
+            self.cursor = self.db.cursor()
+
+
     #veidotas metodes datu apskātei pacientam un dakterim
     def Pacients_info(self):
         print("Pacienta vārds: ", self.Pacients_vards)
@@ -61,22 +68,42 @@ class Slimnica():
             fails.write(str(Dati.Dakteris_tel_numurs))
             fails.write(" \n")
             fails.write(str(Dati.Dakteris_nozare))
-            sql = ("""
-            insert into dakteris (idDakteris, dakteris_vards, dakteris_uzvards, dakteris_Tel)
-            values (%s,%s,%s,%s);
-                    """)
-            
-            data = (1,Dati.Dakteris_vards,Dati.Dakteris_uzvards,Dati.Dakteris_tel_numurs)
-            cursor.execute(sql,data)
-            db.commit()
-            db.close()
 
+    def g_d(self):
+        global karta_1
+        db = mysql.connector.connect(host= "localhost", database = "slimnica", user = "root", password = "admin")
+        cursor = db.cursor()
+        sql = ("""
+        insert into dakteris (idDakteris, dakteris_vards, dakteris_uzvards, dakteris_Tel)
+        values (%s,%s,%s,%s);
+            """)
+        self.cursor.execute("SELECT * FROM slimnica.dakteris")
+        data = (karta_1,Dati.Dakteris_vards,Dati.Dakteris_uzvards,Dati.Dakteris_tel_numurs)
+        cursor.execute(sql,data)
+        db.commit()
+        db.close()
+        karta_1 = karta_1 + 1
+    def g_p(self):
+        global karta_2
+        db = mysql.connector.connect(host= "localhost", database = "slimnica", user = "root", password = "admin")
+        cursor = db.cursor()
+        sql = ("""
+        insert into pacients (idPacients, pacients_vards, pacients_uzvards, pacients_pk, pacients_tel_nr)
+        values (%s,%s,%s,%s,%s);
+            """)
+        self.cursor.execute("SELECT * FROM slimnica.pacients")
+        data = (karta_2,Dati.Pacients_vards,Dati.Pacients_uzvards,Pacients_pk,Dati.Pacients_tel_numurs)
+        cursor.execute(sql,data)
+        db.commit()
+        db.close()
+        karta_2 = karta_2 + 1
 Dati = Slimnica(Pacients_vards="a",Pacients_uzvards="b",Pacients_pk="c",Pacients_tel_numurs="d",Pacients_nozare="e",Dakteris_vards="f",Dakteris_uzvards="g",Dakteris_tel_numurs="h",Dakteris_nozare="i")
 Dati.Pacients_saglabat()
 Dati.Dakteris_saglabat()
 Dati.Pacients_info()
 Dati.Dakteris_info()
-
+karta_1 = 1
+karta_2 = 2
 psg.theme('DarkGreen3')
 logs = [
         [psg.Text('Pacients')],
@@ -121,6 +148,7 @@ while True:
         Pacients_nozare = values[4]
         Dati = Slimnica(Pacients_vards,Pacients_uzvards,Pacients_pk,Pacients_tel_numurs,Pacients_nozare,Dakteris_vards="",Dakteris_uzvards="",Dakteris_tel_numurs="",Dakteris_nozare="")
         Dati.Pacients_saglabat()
+        Dati.g_p()
     if event == "Saglabāt daktera datus":
         Pacients_vards = values [4]
         Pacients_uzvards = values [5]
@@ -133,6 +161,7 @@ while True:
         Dakteris_nozare = values [3]
         Dati = Slimnica(Dakteris_vards,Dakteris_uzvards,Dakteris_tel_numurs,Dakteris_nozare,Pacients_vards,Pacients_uzvards,Pacients_pk,Pacients_tel_numurs,Pacients_nozare)
         Dati.Dakteris_saglabat()
+        Dati.g_d()
     if event == "Pacienta datu apskate":
         psg.theme("DarkGreen4")
         layout = [
