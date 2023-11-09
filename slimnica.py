@@ -8,7 +8,7 @@ print(db)
 cursor = db.cursor()
 
 karta_1 = 1
-karta_2 = 2
+karta_2 = 1
 
 
 #veidota klasē
