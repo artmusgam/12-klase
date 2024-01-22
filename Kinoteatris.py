@@ -101,19 +101,96 @@ class kinoteatris():
             fails.write("\n")
             #uzraksta tekstu dokumenta
             fails.write("Biļetes cena: ")
+            #uzraksta faila Bilete.txt self.Bilete_cena vertību
             fails.write(str(self.Bilete_cena))
             #jaunas rindas izveide
             fails.write("\n")
             #uzraksta tekstu dokumenta
             fails.write("Biļetes filma: ")
+            #uzraksta faila Bilete.txt self.Bilete_filma vertību
             fails.write(str(self.Bilete_filma))
             #jaunas rindas izveide
             fails.write("\n")
+            #uzraksta tekstu dokumenta
+            fails.write("Biļetes laiks: ")
+            #uzraksta faila Bilete.txt self.Bilete_laiks vertību
+            fails.write(str(self.Bilete_laiks))
+            #jaunas rindas izveide
             fails.write("\n")
+            #uzraksta tekstu dokumenta
+            fails.write("Biļetes vieta: ")
+            #uzraksta faila Bilete.txt self.Bilete_vieta vertību
+            fails.write(str(self.Bilete_vieta))
+
 
 #pieverš Dati vertību
 Dati = kinoteatris(Pircejs_vards="",Pircejs_uzvards="",Pircejs_tel_num="",Pircejs_ID="",Bilete_cena="",
                    Bilete_filma="",Bilete_laiks="",Bilete_vieta="",Bilete_num="")
 #saglaba pircēju informāciju
 Dati.Pircejs_saglabat()
+#saglaba biļetes informāciju
+Dati.Bilete_saglabat()
 
+#izvelas krāsas tēmu logiem
+psg.theme('DarkGreen3')
+#izveido logu
+logs = [
+        #izveido loga tekstu
+        [psg.Text('Pircējs')],
+        #izveido loga tekstu ar datu ierakstīšanas laukumu
+        [psg.Text('Vārds'),psg.InputText()],
+        #izveido loga tekstu ar datu ierakstīšans laukumu
+        [psg.Text('Uzvārds'),psg.InputText()],
+        #izveido loga tekstu ar datu ierakstīšans laukumu
+        [psg.Text('Pircēja ID'),psg.InputText()], #domas par iespēju ievest ID ģēnerēšanu
+        #izveido loga tekstu ar datu ierakstīšans laukumu
+        [psg.Text('Telefona numurs'),psg.InputText()],
+        #izveido loga tekstu ar pogu
+        [psg.Button('Saglabāt datus')],
+        #izveido loga tekstu ar pogu
+        [psg.Button('Datu apskate')]
+]
+#izveido otro logiu
+logs2 = [
+    #izveido loga tekstu
+    [psg.Text("Biļete")],
+    #izveido loga tekstu ar datu ierakstīšans laukumu
+    [psg.Text('Filma'),psg.InputText()],
+    #izveido loga tekstu ar datu ierakstīšans laukumu
+    [psg.Text('Laiks'),psg.InputText()], #iespējams būs iespēja ievadīt cita veida nākotne
+    #izveido loga tekstu ar datu ierakstīšans laukumu
+    [psg.Text('Vieta'),psg.InputText()],
+    #izveido loga tekstu ar datu ierakstīšans laukumu
+    [psg.Text('Cena'),psg.InputText()],
+    #izveido loga tekstu ar datu ierakstīšans laukumu
+    [psg.Text('Pircēja ID'),psg.InputText()],
+    #izveido loga tekstu ar pogu
+    [psg.Button('Saglabāt datus')],
+    #izveido loga tekstu ar pogu
+    [psg.Button('Datu apskate')]    
+    
+]
+
+#izveido logu grupu
+logugrupa = [[
+    #veido grupu
+    psg.TabGroup(
+        [
+         [
+            #veido logu nosaukumu un atvertni
+            psg.Tab('Pircējs',logs),
+            #veido logu nosaukumu un atvertni
+            psg.Tab('Biļete',logs2)
+         ]   
+        ]
+    ),
+    #izveido loga tekstu ar pogu
+    psg.Button('Aizvērt')
+]]
+
+#piešķir window vertības
+window = psg.Window('Kinoteātris', logugrupa)
+#veido ciklu
+while True:
+    #piešķir vertības
+    event,values = window.read()
