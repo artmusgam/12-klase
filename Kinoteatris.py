@@ -5,6 +5,9 @@ import mysql.connector
 #importē bibliotēku, kurā atbild par datu kriptēšanu
 from cryptography.fernet import Fernet
 
+karta_1 = 1
+karta_2 = 1
+
 #veidota klasē
 class kinoteatris():
     #veidots konstruktors
@@ -89,6 +92,7 @@ class kinoteatris():
     def Bilete_saglabat(self):
         #atver Bilete.txt failu un rediģē to, jā faila nav tad izveido to
         with open('Bilete.txt', 'w', encoding="utf-8") as fails :
+            self.Bilete_num = karta_1
             #uzraksta tekstu dokumenta
             fails.write("-Biļete-")
             #jaunas rindas izveide
@@ -131,6 +135,7 @@ Dati.Pircejs_saglabat()
 #saglaba biļetes informāciju
 Dati.Bilete_saglabat()
 
+
 #izvelas krāsas tēmu logiem
 psg.theme('DarkGreen3')
 #izveido logu
@@ -146,9 +151,9 @@ logs = [
         #izveido loga tekstu ar datu ierakstīšans laukumu
         [psg.Text('Telefona numurs'),psg.InputText()],
         #izveido loga tekstu ar pogu
-        [psg.Button('Saglabāt datus')],
+        [psg.Button('Saglabāt pircēja datus')],
         #izveido loga tekstu ar pogu
-        [psg.Button('Datu apskate')]
+        [psg.Button('Datu apskate pircējam')]
 ]
 #izveido otro logiu
 logs2 = [
@@ -162,12 +167,10 @@ logs2 = [
     [psg.Text('Vieta'),psg.InputText()],
     #izveido loga tekstu ar datu ierakstīšans laukumu
     [psg.Text('Cena'),psg.InputText()],
-    #izveido loga tekstu ar datu ierakstīšans laukumu
-    [psg.Text('Pircēja ID'),psg.InputText()],
     #izveido loga tekstu ar pogu
-    [psg.Button('Saglabāt datus')],
+    [psg.Button('Saglabāt biļetes datus')],
     #izveido loga tekstu ar pogu
-    [psg.Button('Datu apskate')]    
+    [psg.Button('Datu apskate biļetei')]    
     
 ]
 
@@ -194,3 +197,106 @@ window = psg.Window('Kinoteātris', logugrupa)
 while True:
     #piešķir vertības
     event,values = window.read()
+    #izveido iesacījumu
+    if event == "Saglabāt pircēja datus":
+        #piešķir vertību
+        Pircejs_vards = values [0]
+        #piešķir vertību
+        Pircejs_uzvards = values [1]
+        #piešķir vertību
+        Pircejs_ID = values [2]
+        #piešķir vertību
+        Pircejs_tel_num = values [3]
+        #piešķir vertību
+        Dati = kinoteatris(Pircejs_vards,Pircejs_uzvards,Pircejs_ID,Pircejs_tel_num,
+                           Bilete_cena="",Bilete_filma="",Bilete_laiks="",Bilete_num="",Bilete_vieta="")
+        #Saglabā pircēja datus
+        Dati.Pircejs_saglabat()
+    #izveido iesacījumu
+    if event == "Saglabāt biļetes datus":
+        #piešķir vertību
+        Pircejs_vards = values [5]
+        #piešķir vertību
+        Pircejs_uzvards = values [6]
+        #piešķir vertību
+        Pircejs_ID = values [7]
+        #piešķir vertību
+        Pircejs_tel_num = values [8]
+        #piešķir vertību
+        Bilete_cena = values [0]
+        #piešķir vertību
+        Bilete_filma = values [1]
+        #piešķir vertību
+        Bilete_laiks = values [2]
+        #piešķir vertību
+        Bilete_vieta = values [3]
+        #piešķir vertību
+        Bilete_num = values [4]
+        #piešķir vertību
+        Dati = kinoteatris(Bilete_cena,Bilete_filma,Bilete_laiks,Bilete_vieta,Bilete_num,
+                           Pircejs_vards,Pircejs_uzvards,Pircejs_ID,Pircejs_tel_num)
+        #saglaba biļetes datus
+        Dati.Bilete_saglabat()
+        #piešķir vertību
+        karta_1 = karta_1 + 1
+    
+    #izveido iesacījumu
+    if event == "Datu apskate pircējam":
+        #izvelas logas krasas tēmu
+        psg.theme("DarkGreen4")
+        #izveido loga iestatījumus
+        layout = [
+                    #izveido tekstu loga
+                    [psg.Text("Pircējs")],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Vārds: " + Dati.Pircejs_vards)],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Uzvārds: " + Dati.Pircejs_uzvards)],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("ID: " + str(Dati.Pircejs_ID))],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Tel_num: " + str(Dati.Pircejs_tel_num))],
+                    #izveido iziešanas pogu
+                    [psg.Button("Iziet")]
+            ]
+        #uzstada vertību
+        window2 = psg.Window('',layout)
+        #uzstada vertību
+        event, values = window2.read()
+        #izveido iesacījumu
+        if event == "Iziet":
+            #pārtrauc darbību
+            break
+    #izveido iesacījumu
+    if event == "Datu apskate biļetei":
+        #izvelas krasas tēmu logam
+        psg.theme("DarkGreen4")
+        #izveido loga iestatījumus
+        layout = [
+                    #izveido tekstu loga
+                    [psg.Text("Biļete")],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Numurs: " + str(Dati.Bilete_num))],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Cena: " + str(Dati.Bilete_cena))],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Filma: " + Dati.Bilete_filma)],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Laiks: " + str(Dati.Bilete_laiks))],
+                    #izveido tekstu loga kopā ar datiem
+                    [psg.Text("Vieta: " + Dati.Bilete_vieta)],
+                    #izveido iziešanas pogu
+                    [psg.Button("Iziet")]
+            ]
+        #uzstada vertību
+        window2 = psg.Window('',layout)
+        #uzstada vertību
+        event, values = window2.read()
+        #izveido iesacījumu
+        if event == "Iziet":
+            #partrauc darību
+            break
+    #izveido iesacījumu
+    if event in (psg.WIN_CLOSED, 'Aizvērt'):
+        #pārtrauc darbību
+        break
