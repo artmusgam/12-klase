@@ -5,8 +5,18 @@ import mysql.connector
 #importē bibliotēku, kurā atbild par datu kriptēšanu
 from cryptography.fernet import Fernet
 
+#piešķir vertību
 karta_1 = 1
+#piešķir vertību
 karta_2 = 1
+
+atslega = Fernet.generate_key()
+print(atslega)
+a = Fernet(atslega)
+teksts = b'slepeni dati'
+kriptDati = a.encrypt(teksts)
+print(kriptDati)
+print(a.decrypt(kriptDati))
 
 #veidota klasē
 class kinoteatris():
@@ -33,29 +43,30 @@ class kinoteatris():
         self.Bilete_num = Bilete_num
 
 
+
     #veidota metode Pircejs_info pircēja datu apskatei
     def Pircejs_info(self):
         #izvada self.Pircejs_vards datus
-        print("Pircēja vārds: ", self.Pircejs_vards)
+        print("Pircēja vārds: ", (self.Pircejs_vards))
         #izvada self.Pircejs_uzvards datus
-        print("Pircēja uzvārds: ", self.Pircejs_uzvards)
+        print("Pircēja uzvārds: ", (self.Pircejs_uzvards))
         #izvada self.Pircejs_tel_num datus
-        print("Pircēja telefona numurs: ", self.Pircejs_tel_num)
+        print("Pircēja telefona numurs: ", (self.Pircejs_tel_num))
         #izvada self.Pircejs_ID datus
-        print("Pircēja ID", self.Pircejs_ID)
+        print("Pircēja ID", (self.Pircejs_ID))
 
     #veidota metode Bilete_info biļetes datu apskatei
     def Bilete_info(self):
         #izvada self.Bilete_num datus
-        print("Biļetes numurs: ", self.Bilete_num)
+        print("Biļetes numurs: ", (self.Bilete_num))
         #izvada self.Bilete_vieta datus
-        print("Biļetes vieta: ", self.Bilete_vieta)
+        print("Biļetes vieta: ", (self.Bilete_vieta))
         #izvada self.Bilete_cena datus
-        print("Biļetes cena: ", self.Bilete_cena)
+        print("Biļetes cena: ", (self.Bilete_cena))
         #izvada self.Bilete_filma datus
-        print("Biļetes filma: ", self.Bilete_filma)
+        print("Biļetes filma: ", (self.Bilete_filma))
         #izvada self.Bilete_laiks datus
-        print("Biļetes laiks: ", self.Bilete_laiks)
+        print("Biļetes laiks: ", (self.Bilete_laiks))
     
     #viedota metode pircēja datu saglābšanai
     def Pircejs_saglabat(self):
@@ -127,6 +138,11 @@ class kinoteatris():
             fails.write(str(self.Bilete_vieta))
 
 
+
+
+
+
+
 #pieverš Dati vertību
 Dati = kinoteatris(Pircejs_vards="",Pircejs_uzvards="",Pircejs_tel_num="",Pircejs_ID="",Bilete_cena="",
                    Bilete_filma="",Bilete_laiks="",Bilete_vieta="",Bilete_num="")
@@ -147,7 +163,7 @@ logs = [
         #izveido loga tekstu ar datu ierakstīšans laukumu
         [psg.Text('Uzvārds'),psg.InputText()],
         #izveido loga tekstu ar datu ierakstīšans laukumu
-        [psg.Text('Pircēja ID'),psg.InputText()], #domas par iespēju ievest ID ģēnerēšanu
+        [psg.Text('Pircēja ID'),psg.InputText()],
         #izveido loga tekstu ar datu ierakstīšans laukumu
         [psg.Text('Telefona numurs'),psg.InputText()],
         #izveido loga tekstu ar pogu
@@ -187,8 +203,6 @@ logugrupa = [[
          ]   
         ]
     ),
-    #izveido loga tekstu ar pogu
-    psg.Button('Aizvērt')
 ]]
 
 #piešķir window vertības
@@ -200,38 +214,39 @@ while True:
     #izveido iesacījumu
     if event == "Saglabāt pircēja datus":
         #piešķir vertību
-        Pircejs_vards = values [0]
+        Pircejs_vards = a.encrypt(bytes(values [0], 'UTF-8'))
         #piešķir vertību
-        Pircejs_uzvards = values [1]
+        Pircejs_uzvards = a.encrypt(bytes(values [1],'UTF-8'))
         #piešķir vertību
-        Pircejs_ID = values [2]
+        Pircejs_ID = a.encrypt(bytes(values [3],'UTF-8'))
         #piešķir vertību
-        Pircejs_tel_num = values [3]
+        Pircejs_tel_num = a.encrypt(bytes(values [2], 'UTF-8'))
         #piešķir vertību
         Dati = kinoteatris(Pircejs_vards,Pircejs_uzvards,Pircejs_ID,Pircejs_tel_num,
                            Bilete_cena="",Bilete_filma="",Bilete_laiks="",Bilete_num="",Bilete_vieta="")
         #Saglabā pircēja datus
         Dati.Pircejs_saglabat()
+
     #izveido iesacījumu
     if event == "Saglabāt biļetes datus":
         #piešķir vertību
-        Pircejs_vards = values [5]
+        Pircejs_vards =  a.encrypt(bytes(values [5], 'UTF-8'))
         #piešķir vertību
-        Pircejs_uzvards = values [6]
+        Pircejs_uzvards = a.encrypt(bytes(values [6], 'UTF-8'))
         #piešķir vertību
-        Pircejs_ID = values [7]
+        Pircejs_ID = a.encrypt(bytes(values [7], 'UTF-8'))
         #piešķir vertību
-        Pircejs_tel_num = values [8]
+        Pircejs_tel_num = a.encrypt(bytes(values [8], 'UTF-8'))
         #piešķir vertību
-        Bilete_cena = values [0]
+        Bilete_cena = a.encrypt(bytes(values [0], 'UTF-8'))
         #piešķir vertību
-        Bilete_filma = values [1]
+        Bilete_filma = a.encrypt(bytes(values [1], 'UTF-8'))
         #piešķir vertību
-        Bilete_laiks = values [2]
+        Bilete_laiks = a.encrypt(bytes(values [2], 'UTF-8'))
         #piešķir vertību
-        Bilete_vieta = values [3]
+        Bilete_vieta = a.encrypt(bytes(values [3], 'UTF-8'))
         #piešķir vertību
-        Bilete_num = values [4]
+        Bilete_num = a.encrypt(bytes(values [4], 'UTF-8'))
         #piešķir vertību
         Dati = kinoteatris(Bilete_cena,Bilete_filma,Bilete_laiks,Bilete_vieta,Bilete_num,
                            Pircejs_vards,Pircejs_uzvards,Pircejs_ID,Pircejs_tel_num)
@@ -244,18 +259,19 @@ while True:
     if event == "Datu apskate pircējam":
         #izvelas logas krasas tēmu
         psg.theme("DarkGreen4")
+        a.decrypt(Pircejs_vards)
         #izveido loga iestatījumus
         layout = [
                     #izveido tekstu loga
                     [psg.Text("Pircējs")],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Vārds: " + Dati.Pircejs_vards)],
+                    [psg.Text("Vārds: " + str(a.decrypt(Dati.Pircejs_vards)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Uzvārds: " + Dati.Pircejs_uzvards)],
+                    [psg.Text("Uzvārds: " + str(a.decrypt(Dati.Pircejs_uzvards)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("ID: " + str(Dati.Pircejs_ID))],
+                    [psg.Text("ID: " + str(a.decrypt(Dati.Pircejs_ID)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Tel_num: " + str(Dati.Pircejs_tel_num))],
+                    [psg.Text("Tel_num: " + str(a.decrypt(Dati.Pircejs_tel_num)))],
                     #izveido iziešanas pogu
                     [psg.Button("Iziet")]
             ]
@@ -276,26 +292,20 @@ while True:
                     #izveido tekstu loga
                     [psg.Text("Biļete")],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Numurs: " + str(Dati.Bilete_num))],
+                    [psg.Text("Numurs: " + str(a.decrypt(Dati.Bilete_num)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Cena: " + str(Dati.Bilete_cena))],
+                    [psg.Text("Cena: " + str(a.decrypt(Dati.Bilete_cena)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Filma: " + Dati.Bilete_filma)],
+                    [psg.Text("Filma: " + str(a.decrypt(Dati.Bilete_filma)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Laiks: " + str(Dati.Bilete_laiks))],
+                    [psg.Text("Laiks: " + str(a.decrypt(Dati.Bilete_laiks)))],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Vieta: " + Dati.Bilete_vieta)],
-                    #izveido iziešanas pogu
-                    [psg.Button("Iziet")]
+                    [psg.Text("Vieta: " + str(a.decrypt(Dati.Bilete_vieta)))],
             ]
         #uzstada vertību
         window2 = psg.Window('',layout)
         #uzstada vertību
         event, values = window2.read()
-        #izveido iesacījumu
-        if event == "Iziet":
-            #partrauc darību
-            break
     #izveido iesacījumu
     if event in (psg.WIN_CLOSED, 'Aizvērt'):
         #pārtrauc darbību
