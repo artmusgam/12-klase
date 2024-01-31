@@ -250,56 +250,14 @@ while True:
     
     #izveido iesacījumu
     if event == "Datu apskate pircējam":
-        #izvelas logas krasas tēmu
-        psg.theme("DarkGreen4")
-        a.decrypt(Pircejs_vards)
-        #izveido loga iestatījumus
-        layout = [
-                    #izveido tekstu loga
-                    [psg.Text("Pircējs")],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Vārds: " + str(a.decrypt(Dati.Pircejs_vards)))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Uzvārds: " + str(a.decrypt(Dati.Pircejs_uzvards)))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("ID: " + str(a.decrypt(Dati.Pircejs_ID)))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Tel_num: " + str(a.decrypt(Dati.Pircejs_tel_num)))],
-                    #izveido iziešanas pogu
-                    [psg.Button("Iziet")]
-            ]
-        #uzstada vertību
-        window2 = psg.Window('',layout)
-        #uzstada vertību
-        event, values = window2.read()
-        #izveido iesacījumu
-        if event == "Iziet":
-            #pārtrauc darbību
-            break
+        psg.popup('Vārds: '+ str(a.decrypt(Dati.Pircejs_vards)),"Uzvārds: " + str(a.decrypt(Dati.Pircejs_uzvards)),
+                  "ID: " + str(a.decrypt(Dati.Pircejs_ID)), "Tel_num: " + str(a.decrypt(Dati.Pircejs_tel_num)),
+                    title= 'Pircēju dati')
     #izveido iesacījumu
     if event == "Datu apskate biļetei":
-        #izvelas krasas tēmu logam
-        psg.theme("DarkGreen4")
-        #izveido loga iestatījumus
-        layout = [
-                    #izveido tekstu loga
-                    [psg.Text("Biļete")],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Numurs: " + str(Dati.Bilete_num))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Cena: " + str(a.decrypt(Dati.Bilete_cena)))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Filma: " + str(a.decrypt(Dati.Bilete_filma)))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Laiks: " + str(a.decrypt(Dati.Bilete_laiks)))],
-                    #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Vieta: " + str(a.decrypt(Dati.Bilete_vieta)))],
-            ]
-        #uzstada vertību
-        window2 = psg.Window('',layout)
-        #uzstada vertību
-        event, values = window2.read()
-    #izveido iesacījumu
+        psg.popup("Numurs: " + str(Dati.Bilete_num), "Cena: " + str(a.decrypt(Dati.Bilete_cena)),
+                   "Filma: " + str(a.decrypt(Dati.Bilete_filma)), "Laiks: " + str(a.decrypt(Dati.Bilete_laiks)),
+                    "Vieta: " + str(a.decrypt(Dati.Bilete_vieta)), title= 'Biļetes dati')
     if event in (psg.WIN_CLOSED, 'Aizvērt'):
         #pārtrauc darbību
         break
