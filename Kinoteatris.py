@@ -42,8 +42,6 @@ class kinoteatris():
         #konstruktora elementam self.Bilete_num Piešķirta vertība Bilete_num
         self.Bilete_num = Bilete_num
 
-
-
     #veidota metode Pircejs_info pircēja datu apskatei
     def Pircejs_info(self):
         #izvada self.Pircejs_vards datus
@@ -136,11 +134,6 @@ class kinoteatris():
             fails.write("Biļetes vieta: ")
             #uzraksta faila Bilete.txt self.Bilete_vieta vertību
             fails.write(str(self.Bilete_vieta))
-
-
-
-
-
 
 
 #pieverš Dati vertību
@@ -292,7 +285,7 @@ while True:
                     #izveido tekstu loga
                     [psg.Text("Biļete")],
                     #izveido tekstu loga kopā ar datiem
-                    [psg.Text("Numurs: " + str(a.decrypt(Dati.Bilete_num)))],
+                    [psg.Text("Numurs: " + str(Dati.Bilete_num))],
                     #izveido tekstu loga kopā ar datiem
                     [psg.Text("Cena: " + str(a.decrypt(Dati.Bilete_cena)))],
                     #izveido tekstu loga kopā ar datiem
