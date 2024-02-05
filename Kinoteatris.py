@@ -15,7 +15,7 @@ cursor = db.cursor()
 #piešķir vertību
 karta_1 = 1
 #piešķir vertību
-karta_2 = 1
+karta_2 = 0
 
 #piešķir vertību
 atslega = Fernet.generate_key()
@@ -182,13 +182,13 @@ class kinoteatris():
         cursor = db.cursor()
         #piešķir vertību ar saglābšanas vietu un metodi
         sql = ("""
-        insert into bilete (idBilete, Cena, Filma, Vieta, Laiks, Numurs)
-        values (%s,%s,%s,%s,%s,%s);
+        insert into bilete (idBilete, Cena, Filma, Vieta, Laiks, Numurs, idPircejs)
+        values (%s,%s,%s,%s,%s,%s,%s);
             """)
         #veicina darbībus ar datiem datubāze
         self.cursor.execute("SELECT * FROM kinoteatris.bilete")
         #piešķir vertības
-        data = (karta_1,Dati.Bilete_cena,Dati.Bilete_filma,Dati.Bilete_vieta,Dati.Bilete_laiks,Dati.Bilete_num)
+        data = (karta_1,Dati.Bilete_cena,Dati.Bilete_filma,Dati.Bilete_vieta,Dati.Bilete_laiks,Dati.Bilete_num,karta_2)
         #veicina darbības ar metodem
         cursor.execute(sql,data)
         #saglabā apstiprina izmaiņas
